@@ -4,7 +4,7 @@
 
 Data access control is a challenging issue in public cloud storage systems.Cipher text-policy attribute-based encryption (CP-ABE) has been adopted as a promising technique to provide flexible, fine-grained, and secure data access control for cloud storage with honest-but-curious cloud servers. Users may be stuck in the waiting queue for a long period to obtain their secret keys, thereby resulting in low efficiency of the system. Although multi-authority access control schemes have been proposed, these schemes still cannot overcome the drawbacks of single-point bottleneck and low efficiency, due to the fact that each of the authorities still independently manages a disjoint attribute set.
 
-## PROPOSED FRAMEWORK
+## Proposed Framework
 
 - In this project I have proposed a novel heterogeneous framework to
 remove the problem of single-point performance bottleneck and provide a more efficient
