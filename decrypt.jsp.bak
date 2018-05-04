@@ -1,0 +1,133 @@
+  <%@ include file="uheader.jsp"%>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<%@ page import="java.io.*"%>
+<%@ page import="databaseconnection.*,abe.*"%>
+<%@ page import="java.sql.*"%>
+<%! String aKey=null,msg;
+boolean status;%>
+<% 
+Connection con1=databasecon.getconnection();
+Statement st2=con1.createStatement();
+%>
+
+
+<%!String  thisLine = null;
+StringBuffer sb1=null;
+String filename=null,j,unm=null,fid=null,fnm=null,skey=null,sk=null,aces=null,pkey=null,symkey;
+int i=0;byte data[]=null,sky[]=null;
+%>
+ <%
+		
+
+Connection con=databasecon.getconnection();
+Statement st=con.createStatement();
+Statement st1=con.createStatement();
+fid=request.getParameter("fid");
+unm=request.getParameter("unm");
+sk=request.getParameter("skey");
+System.out.println("sk="+sk);
+ResultSet r=st.executeQuery("select fname,access,pkey from cloudserver where fid="+fid+"  ");
+if(r.next())
+	{
+	System.out.println("if");
+	fnm=r.getString(1);
+	aces=r.getString(2);
+	skey=r.getString(3);
+}
+String symkey=request.getParameter("aeskey");
+int k=0;
+Statement sts=con.createStatement();
+ResultSet rrr=sts.executeQuery("select course,branch,year,job from uregister where sk='"+sk+"'  ");
+String c=null,b=null,y=null;
+if(rrr.next())
+	{
+System.out.println("iff");
+	k=1;
+	c=rrr.getString(1);
+	b=rrr.getString(2);
+	y=rrr.getString(3);
+	j=rrr.getString(4);
+	System.out.println("c="+c);
+}
+
+Statement st5=con.createStatement();
+st5.executeUpdate("delete from temps");
+int ii=st5.executeUpdate("insert into temps values('"+c+"','"+b+"','"+y+"','"+j+"')");
+Statement st4=con.createStatement();
+ResultSet rsn=st4.executeQuery("select *from temps where "+aces+" ");
+if(rsn.next())
+	{ 
+PreparedStatement p=con.prepareStatement("select "+CPABE_decrypt+"(aeskey,'"+skey+"'),filedata from cloudserver where fid="+fid+" ");
+ResultSet rr=p.executeQuery();
+if(rr.next()){
+	
+	symkey=rr.getString(1);
+	data=rr.getBytes(2);
+	status=false;
+}
+%>
+<br>
+<div class="w3l-main-contact">
+        <div class="container">
+           
+            <div class="col-md-9 agileinfo-contact-main-address">
+                <h4 class="w3ls-inner-title">FileDownload</h4>
+                
+        
+      
+		<div class="agileits-main-right">
+                    
+                    <form action="DecryptData.jsp" method="post" class="agile_form">
+                       <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">File Id<span>*</span></label>
+                            <input  placeholder=""  name="fid" value=<%=fid%> type="text" required="">
+							
+                        </div>	
+						<div class="clearfix"></div>
+						 <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">File Name<span>*</span></label>
+                            <input  placeholder="  " name="fname" value=<%=fnm%> type="text" required="">
+                        </div>	
+							
+						<div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">Ciphertext ( CT ):<span>*</span></label>
+                            <textarea  placeholder=" " name="file"  required type="text" required=""><%=new String(data)%></textarea>
+                        </div>	
+                       
+                        <div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">Symmetrickey:<span>*</span></label>
+                            <input  placeholder=" " type="text" name="symkey" value=<%=symkey%> readonly  required="">
+                        </div>
+						<div class="clearfix"></div>
+						
+                      
+                        <br>
+                        <input type="submit" value="Decrypt">
+                        
+
+                    </form>
+											 <%}else{
+											 if(k==0){
+											 msg="msg1=Invalid_SK";
+											 }
+											 else{
+											 msg="msg=NotAccess";
+											 }
+														response.sendRedirect("download.jsp?"+msg+" ");
+												}%>
+		        </div>
+		        <div class="clearfix">	</div>
+	        </div>		
+         </div>
+        <div class="clearfix"></div>
+        </div>
+		
+		<br>
+
+<%@ include file="footer.jsp"%>

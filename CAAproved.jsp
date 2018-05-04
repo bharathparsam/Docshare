@@ -1,0 +1,51 @@
+<%@ page import="java.sql.*"%>
+
+
+<%@ page  import="java.sql.*,DSA.*" import="databaseconnection.*,java.util.*" import="javax.swing.JOptionPane,java.math.BigInteger,java.security.*,java.security.spec.*,javax.crypto.KeyAgreement"
+%>
+
+<%! String name,username,pasword,gen,doj,branch,dept,subdept,unm,cno,adrs;
+	int i=0,exp=0;
+	byte[] cask=null;
+%>
+<%
+try{
+Connection con = databasecon.getconnection();
+
+Statement st=con.createStatement();
+
+unm=request.getParameter("unm");
+//System.out.println(pwd);
+%>
+<%
+
+	Random rr=new Random();
+int rno=rr.nextInt(100000);
+//System.out.println("rno:"+rno);
+Statement st1=con.createStatement();
+
+ResultSet r=st1.executeQuery("select cask from cakeys");
+if(r.next())
+	{
+cask=r.getBytes(1);
+	}
+
+DSA dsa=new DSA();
+//dsa.keyGeneration();
+
+byte[] CertUid=dsa.Sign(new Integer(rno).toString(),cask);
+System.out.println("cid="+CertUid);
+
+PreparedStatement q= con.prepareStatement("update uregister set certificate=?,uid='"+rno+"' where unm='"+unm+"'");
+	q.setBytes(1,CertUid);
+	int ss=q.executeUpdate();
+if(ss>0)
+	{
+	response.sendRedirect("Userslist.jsp?msg=success");
+	}
+}
+catch(Exception e)
+{
+e.printStackTrace();
+	}
+%>

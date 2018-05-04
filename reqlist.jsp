@@ -1,0 +1,79 @@
+<%@ include file="aheader.jsp"%>
+
+<%@ page import="java.sql.*,databaseconnection.*"%>
+<head>
+  <div class="col-md-9 agileinfo-contact-main-address"><br><br>
+                <h4 class="w3ls-inner-title">User's RequestList</h4>
+         
+        
+        </div>
+		
+ 
+</head>
+<style>
+table {
+    border-collapse: collapse;
+    width: %;
+}
+
+th, td {
+    text-align: left;
+    padding: 0px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+<br><br><br><br>
+	       
+          
+
+<%@ page  import="java.sql.*" import="databaseconnection.*,java.util.*" import="javax.swing.JOptionPane"%>
+
+
+
+<%! String sts;
+
+%>  
+
+<%
+try{
+Connection con = databasecon.getconnection();
+
+Statement st=con.createStatement();
+Statement st2=con.createStatement();
+
+ResultSet r2=st2.executeQuery("select sts from reqsk");
+if(r2.next())
+	{
+sts=r2.getString(1);
+}
+
+if(sts.equals("fail")){
+
+	out.println("<font color=RED size=2><strong>Request is Rejected, Please Verify Once Again</strong></font>");
+
+}
+if(sts.equals("finish")){
+
+out.println("<font color=Green size=2><strong>Request is Accepted</strong></font>");
+
+}
+
+
+
+String aa=(String)session.getAttribute("aa");
+%>
+
+<center><table class="table" ><tr><th>CertUid</th><th>UserName( Uj )</th><th>AAi</th><th>Verify</th></tr>
+<%
+ResultSet r=st.executeQuery("select *from reqsk where (sts='request' or sts='fail') and aai='"+aa+"' ");
+while(r.next()){%>
+<tr><td><%=r.getString(1)%></td><td><%=r.getString(2)%></td>
+<td><%=r.getString(3)%></td>
+<td><a href="verify.jsp?certuid=<%=r.getString(1)%>&aid=<%=r.getString(3)%>"><font size="" color="#3366ff">Verify</font></a></td></tr>
+<%}%>
+<%}catch(Exception e){e.printStackTrace();}%>
+</div ></table></div></div>
+<br><br><br><br><br><br><br><br><br><br>
+<%@ include file="footer.jsp"%>

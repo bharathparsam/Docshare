@@ -1,0 +1,215 @@
+  <%@ include file="oheader.jsp"%>
+  <%@page import="java.util.*"%>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>CP-ABE</title>
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+function myFunction() {
+    var x = document.getElementById("mySelect").value;
+	var sp=x.split(",");
+		var s=document.getElementById("ids").value;
+		var s1=document.getElementById("idss").value;
+	//var s1=document.getElementById("idss").value;
+document.getElementById("ids").innerHTML = s+sp[0];
+document.getElementById("idss").innerHTML = s1+sp[1];
+	 
+//	document.getElementById("demo").innerHTML = "You selected: " + x;
+}
+</script>
+<script>
+function myFunction2() {
+    var x2 = document.getElementById("mySelect2").value;
+	var sp1=x2.split(",");
+	  var xx=document.getElementById("ids").value;
+	   var xx1=document.getElementById("idss").value;
+	document.getElementById("ids").innerHTML =xx+sp1[0];
+document.getElementById("idss").innerHTML =xx1+sp1[1];
+	//document.getElementById("demo").innerHTML = "You selected: " + x2;
+}
+</script>
+<script>
+function myFunction3() {
+    var x3 = document.getElementById("mySelect3").value;
+		var sp2=x3.split(",");
+	 var xxx=document.getElementById("ids").value;
+	  var xxx1=document.getElementById("idss").value;
+    //document.getElementById("ids").innerHTML =xxx+x3;
+	document.getElementById("ids").innerHTML =xxx+sp2[0];
+document.getElementById("idss").innerHTML =xxx1+sp2[1];
+	//document.getElementById("demo").innerHTML = "You selected: " + x3;
+}
+</script>
+
+<script>
+function myFunction4() {
+    var x4 = document.getElementById("mySelect4").value;
+	var sp2=x4.split(",");
+	 var xxxx=document.getElementById("ids").value;
+	 	 var xxxx1=document.getElementById("idss").value;
+    //document.getElementById("ids").innerHTML =xxxx+x4;
+		document.getElementById("ids").innerHTML =xxxx+sp2[0];
+document.getElementById("idss").innerHTML =xxxx1+x4;
+	//document.getElementById("demo").innerHTML = "You selected: " + x3;
+}
+</script>
+<script>
+function myFunction5() {
+    var x5 = document.getElementById("mySelect5").value;
+	 var xxxxx=document.getElementById("ids").value;
+	  var xxxxx1=document.getElementById("idss").value;
+   // document.getElementById("ids").innerHTML =xxxxx+x5;
+	document.getElementById("ids").innerHTML =xxxxx+x5;
+document.getElementById("idss").innerHTML =xxxxx1+x5;
+   // document.getElementById("ids").innerHTML =xxxxx+x5;
+	//document.getElementById("demo").innerHTML = "You selected: " + x3;
+}
+</script>
+
+
+</head>
+<%@ page import="java.io.*"%>
+<%@ page import="databaseconnection.*"%>
+<%@ page import="java.sql.*"%>
+<%!String  thisLine = null;
+StringBuffer sb1=null,filedata;
+String filename=null,unm=null,fid=null,fnm=null,pkey;
+int i=0;
+
+
+%>
+<% 
+
+
+
+	 unm=(String)session.getAttribute("unm");
+	  String fid=request.getParameter("fid");
+	 String fnm=request.getParameter("fnm");
+	 String filedata=request.getParameter("file");;
+	 	 String symkey=(String)session.getAttribute("symkey");
+Connection con=databasecon.getconnection();
+int no=0;
+Statement st=con.createStatement();Statement st1=con.createStatement();
+
+ResultSet r=st.executeQuery("select PK from setup");
+if(r.next())
+	{
+pkey=r.getString(1);
+	}
+%>
+
+<div class="w3l-main-contact">
+        <div class="container">
+           
+            <div class="col-md-9 agileinfo-contact-main-address">
+                <h4 class="w3ls-inner-title">FileEncrypting </h4>
+
+
+
+
+<form action="EncryptSymkey.jsp" method="post" class="agile_form" id="demoForm" class="demoForm">
+					 <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">File ID:<span>*</span></label>
+                            <input  placeholder="" name="fid" value=<%=fid%> type="text" required="">
+                        </div>	
+						<div class="clearfix"></div>
+						 <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">File Name<span>*</span></label>
+                            <input  placeholder="  " name="fnm" value=<%=fnm%> type="text" required="">
+                        </div>	
+						<div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">EncryptData:<span>*</span></label>
+                            <textarea name="file" cols=30 rows=10><%=filedata%></textarea>
+                        </div>	
+
+                       
+                        <div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">Public Key:<span>*</span></label>
+                            <input  placeholder=" " name="pkey" readonly value=<%=pkey%> required type="text" required="">
+                        </div>
+						<div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">Symmetrickey:<span>*</span></label>
+                            <input  placeholder=" " name="symkey" readonly value=<%=symkey%> type="text" required="">
+                        </div>	
+						 <div class="clearfix"></div>
+                        <div class="section_class_agileits sec-left">
+                        <label class="contact-form-w3ls">Select Attributes:<span>*</span></label>
+                        <select id="mySelect" onchange="myFunction()" required>
+						 <option value="">Select Courses</option>
+							<option value="MCA,c='MCA'">M.C.A</option>
+                           <option value="BTECH,c='BTECH'">B.Tech</option>
+							<option value="MTECH,c='MTECH'">M.Tech</option>
+						</select>
+						</div>
+
+						<div class="clearfix"></div>
+                        
+						 <div class="section_class_agileits sec-left">
+                        <select id="mySelect2" onchange="myFunction2()">
+						<option value="">Select Branch</option>
+                           <option value="CSE,b='CSE'">CSE</option>
+							<option value="ECE,b='ECE'">ECE</option>
+							<option value="EEE,b='EEE'">EEE</option> 
+							<option value="ME,b='ME'">ME</option>
+							<option value="IT,b='IT'">IT</option>
+							<option value="VLSI,b='VLSI'">VLSI</option>
+						</select>
+						</div>
+
+						<div class="clearfix"></div>
+						<div class="section_class_agileits sec-left">
+                        <select id="mySelect3" onchange="myFunction3()"> 	 
+						<option value="">Select Year</option>
+                           <option value="1,y='1'">1</option>
+							<option value="2,y='2'">2</option>
+							<option value="3,y='3'">3</option> 
+							<option value="4,y='4'">4</option>
+						</select>
+						</div>
+						
+						<div class="clearfix"></div>
+						<div class="section_class_agileits sec-left">
+                         <select id="mySelect4" onchange="myFunction4()" required>
+                          <option value="">Select JobRole</option>
+                            <option value="HOD,j='HOD'">HOD</option>
+							<option value="Faculty,j='Faculty'">Faculty</option>
+							<option value="Student,j='Student'">Student</option>
+						</select>
+						</div>
+						<div class="clearfix"></div>
+						<div class="clearfix"></div>
+						<div class="section_class_agileits sec-left">
+                        <select id="mySelect5" onchange="myFunction5()">
+						<option value="" selected>Select  Operator
+						 <option value="&&">AND</option>
+						 <option value="||">OR</option>
+						 <option value="(">(</option>
+						 <option value=")">)</option>
+						
+						</select>
+						</div>
+						<div class="clearfix"></div>
+						<div class="clearfix"></div>
+                        <div class="w3ls-text sec-left">
+                            <label class="contact-form-w3ls">Access Structure<span>*</span></label>
+                            <textarea  rows="3" cols="50" id="ids" readonly  name="ids"  class="special"  required></textarea><textarea  rows="3" cols="50" id="idss" hidden name="idss"  class="special"  required></textarea>
+                        </div>	
+						 <div class="clearfix"></div>
+
+                        <br>
+                        <input type="submit" value="Encrypt">
+                        <p><span>*</span>marked fields are mandatory</p>
+
+                    </form>
+		        </div>
+		        <div class="clearfix">	</div>
+	        </div>		
+         </div>
+        <div class="clearfix"></div>
+        </div>
+		
+		<%@ include file="footer.jsp"%>
