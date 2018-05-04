@@ -1,4 +1,4 @@
-### DOCSHARE
+# DOCSHARE
 
 ## INTRODUCTION
 
@@ -15,7 +15,7 @@ access control scheme with an auditing mechanism.
 - To enhance security, I have also proposed an auditing mechanism to detect which attribute authority has incorrectly or maliciously performed the legitimacy verification procedure.
 - Analysis shows that the system not only guarantees the security requirements but also makes great performance improvement on key generation.
 
-## How will you access
+## Installation Steps
 
 1. Download and extract the zip file.
 2. Install a latest **tomcat server** into your PC/Laptop.
