@@ -22,7 +22,7 @@ access control scheme with an auditing mechanism.
 3. Install **SQLyog** software into your PC/Laptop.
 4. Copy the whole source codes into your webapps folder.
 5. Open your tomcat folder and copy the whole folder of *Docshare* into webapps.
-6. Open _Database->db_ file and **copy _the sql commands_ in SQLyog** and now you are done with sql connection.
+6. Open _Database->db_ file and **copy _the sql commands_ into SQLyog** and now you are done with sql connection.
 7. Once you open the localhost in manager app you can view the folder you copied in webapps.
 8. You can also run by typing in url. For Example `http://localhost:2016/Docshare/index.jsp` .
 > All set you can view your project now.
